@@ -18,11 +18,8 @@ class AuthController {
     }
     const hashPassword = await bcrypt.hash(password, 5);
     const user = await User.create(name, email, hashPassword);
-    console.log('user', user);
     const [newUser, _fields] = await User.findById(user[0].insertId);
-    console.log('newuser', newUser);
     const token = generateJwt(newUser[0].id, newUser[0].email, newUser[0].status);
-    console.log('token', token);
     return res.status(201).json({ token });
   }
 
